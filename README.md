@@ -49,6 +49,7 @@ TABLE II.       Experimental results on VisDrone2017
     <summary>②</summary>
     test on RTX3080Ti
 </details>
+
 ## Contact
 
 jiaxiongyang at tongji dot edu dot cn
