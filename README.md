@@ -52,4 +52,4 @@ TABLE II.       Experimental results on VisDrone2017
 
 ## Contact
 
-jiaxiongyang at tongji dot edu dot cn
+jiaxiongyang at tongji dot edu dot com
