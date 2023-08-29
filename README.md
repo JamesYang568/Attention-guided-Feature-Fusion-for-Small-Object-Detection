@@ -11,7 +11,7 @@ Placing files in our repository to the appropriate place like MMYOLO, just overw
 
 Same as MMYOLO, please see [15 minutes to get started with MMYOLO object detection — MMYOLO 0.5.0 documentation](https://mmyolo.readthedocs.io/en/latest/get_started/15_minutes_object_detection.html#) and our config file is in `configs/att-guided_yolov6s/yolov6_s_myneck.py`.
 
-We used a very simple and intuitive way to visually present the code, with all modules plug and play.
+We used a very simple and intuitive way to present the code, with all modules plug and play.
 
 ## Result
 
@@ -52,4 +52,4 @@ TABLE II.       Experimental results on VisDrone2017
 
 ## Contact
 
-jiaxiongyang at tongji dot edu dot com
+jiaxiongyang at tongji dot edu dot cn
