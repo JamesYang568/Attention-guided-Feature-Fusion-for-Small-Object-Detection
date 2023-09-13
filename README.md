@@ -17,16 +17,16 @@ We used a very simple and intuitive way to present the code, with all modules pl
 
 TABLE I.       Experimental results on COCO 2017 *test-dev* 
 
-| **Method**          | **Backbone**        | **AP** | **AP50** | **AP75** | **APS**  | **APM** | **APL**  |
-| ------------------- | ------------------- | :----: | :------: | :------: | :------: | :-----: | :------: |
-| ABFPN               | ResNet-50           |  38.6  |   61.3   |    -     |   24.4   |  42.0   |   49.9   |
-| YOLOX-s             | Modified CSPNet     |  40.5  |   59.7   |   44.2   |   24.1   |  45.2   |   54.0   |
-| CL-FPN              | ResNet-101          |  41.0  |   62.9   |   44.5   |   23.4   |  44.0   |   52.0   |
-| AC-FPN              | ResNet-101          |  42.4  | **65.1** |   46.2   |   25.0   |  45.2   |   53.2   |
-| PPYOLOE-s           | CSPRepResNet        |  43.1  |   60.5   |   46.6   |   23.2   |  46.4   |   56.9   |
-| YOLOv6-s (baseline) | EfficientRep        |  43.5  |   60.4   |   46.8   |   23.7   |  48.9   |   59.9   |
-| YOLOv8-s            | Modified CSPNet C2f |  44.2  |   61.1   | **47.9** | **25.9** |  49.1   | **60.1** |
-| Ours                | EfficientRep        |  44.3  |   61.8   |   47.4   |   24.6   |  49.6   |   59.9   |
+| **Method**          | **Backbone**        |  **AP**  | **AP50** | **AP75** |  **APS** | **APM**  |  **APL** |
+| ------------------- | ------------------- | :-----:  | :------: | :------: | :------: | :------: | :------: |
+| ABFPN               | ResNet-50           |   38.6   |   61.3   |    -     |   24.4   |   42.0   |   49.9   |
+| YOLOX-s             | Modified CSPNet     |   40.5   |   59.7   |   44.2   |   24.1   |   45.2   |   54.0   |
+| CL-FPN              | ResNet-101          |   41.0   |   62.9   |   44.5   |   23.4   |   44.0   |   52.0   |
+| AC-FPN              | ResNet-101          |   42.4   | **65.1** |   46.2   |   25.0   |   45.2   |   53.2   |
+| PPYOLOE-s           | CSPRepResNet        |   43.1   |   60.5   |   46.6   |   23.2   |   46.4   |   56.9   |
+| YOLOv6-s (baseline) | EfficientRep        |   43.5   |   60.4   |   46.8   |   23.7   |   48.9   |   59.9   |
+| YOLOv8-s            | Modified CSPNet C2f |   44.2   |   61.1   | **47.9** | **25.9** |   49.1   | **60.1** |
+| Ours                | EfficientRep        | **44.3** |   61.8   |   47.4   |   24.6   | **49.6** |   59.9   |
 
 TABLE II.       Experimental results on VisDrone2017
 
@@ -43,11 +43,11 @@ TABLE II.       Experimental results on VisDrone2017
 
 <details> 
     <summary>①</summary>
-    the bold and underlined ones mean the best and second best 
+    The bold ones mean the top performance. 
 </details>
 <details> 
     <summary>②</summary>
-    test on RTX3080Ti
+    test on RTX3080Ti, 50 epochs
 </details>
 
 ## Contact
