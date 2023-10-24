@@ -1,6 +1,18 @@
 # Attention-guided-Feature-Fusion-for-SOD
 Code of paper 'Attention-guided Feature Fusion for Small Object Detection'
 
+<img src="https://github.com/JamesYang568/Attention-guided-Feature-Fusion-for-Small-Object-Detection/assets/49474766/4966a75c-de18-49a1-9c29-157db347a0dd" alt="Overall" width="70%">
+
+### AFFM
+Attention guided feature fusion module for contextual and spatial alignment of adjacent feature maps.
+
+<img src="https://github.com/JamesYang568/Attention-guided-Feature-Fusion-for-Small-Object-Detection/assets/49474766/6a33ae3e-e8b5-48a8-836d-fa962f59d16a" alt="AFFM" width="50%">
+
+### SFSM
+Shallow Feature supplement module for small object feature reinforcement using cross-attention.
+
+<img src="https://github.com/JamesYang568/Attention-guided-Feature-Fusion-for-Small-Object-Detection/assets/49474766/18aa73c4-b208-4fc9-9d1f-108baaeedf8d" alt="SFSM" width="50%">
+
 ## Installation
 
 For MMYOLO, please see https://mmyolo.readthedocs.io/
@@ -47,7 +59,7 @@ TABLE II.       Experimental results on VisDrone2017
 </details>
 <details> 
     <summary>②</summary>
-    test on RTX3080Ti, 50 epochs
+    Test on RTX3080Ti, after 50 epochs training.
 </details>
 
 ## Contact
