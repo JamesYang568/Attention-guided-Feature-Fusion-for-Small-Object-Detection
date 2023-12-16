@@ -19,7 +19,7 @@ class SpatialAlignedBlock(BaseModule):
         kernel: kernel size for decomposing conv. Default 5
     """
 
-    def __init__(self, parallel=False, aggregate=False,
+    def __init__(self, parallel=False, aggregate=True,
                  kernel=5,
                  conv_cfg=None,
                  norm_cfg: ConfigType = dict(type='BN', momentum=0.1, eps=1e-5),
@@ -29,13 +29,19 @@ class SpatialAlignedBlock(BaseModule):
         super(SpatialAlignedBlock, self).__init__(init_cfg=init_cfg)
         self.parallel = parallel
         self.aggregate = aggregate
-        self.aggregate = ConvModule(2,
-                                    2,
-                                    kernel_size=1,
-                                    act_cfg=act_cfg,
-                                    conv_cfg=conv_cfg,
-                                    norm_cfg=norm_cfg
-                                    ) if aggregate else None
+        if aggregate:
+            out_plane = 2
+            self.aggregate = ConvModule(2,
+                                        1,
+                                        kernel_size=1,
+                                        act_cfg=act_cfg,
+                                        conv_cfg=conv_cfg,
+                                        norm_cfg=norm_cfg
+                                        )
+        else:
+            out_plane = 1
+            self.aggregate = nn.Identity()
+
         self.spatial_attentive = nn.Sequential(
             ConvModule(2,
                        2,
@@ -45,7 +51,7 @@ class SpatialAlignedBlock(BaseModule):
                        norm_cfg=norm_cfg,
                        conv_cfg=conv_cfg),
             ConvModule(2,
-                       2,
+                       out_channels=out_plane,
                        kernel_size=(kernel, 1),
                        padding=(kernel // 2, 0),
                        act_cfg=dict(type='Sigmoid'),
@@ -60,7 +66,7 @@ class SpatialAlignedBlock(BaseModule):
                        norm_cfg=norm_cfg,
                        conv_cfg=conv_cfg),
             ConvModule(2,
-                       2,
+                       out_channels=out_plane,
                        kernel_size=(kernel, 1),
                        padding=(kernel // 2, 0),
                        act_cfg=dict(type='Sigmoid'),
@@ -73,12 +79,12 @@ class SpatialAlignedBlock(BaseModule):
         avg_l = torch.mean(shallow, dim=1, keepdim=True)
         avg_spatial = torch.concat([avg_l, avg_h], dim=1)
 
-        if self.aggregate:
-            avg_spatial = self.aggregate(avg_spatial)
         if not self.parallel:
             attention_weight = self.spatial_attentive(avg_spatial)
         else:
             attention_weight = self.spatial_attentive[1](self.spatial_attentive[0](avg_spatial))
+
+        attention_weight = self.aggregate(attention_weight)
 
         deep = deep * attention_weight
         shallow = shallow * (1 - attention_weight)
@@ -100,14 +106,15 @@ class ContextualAlignedBlock(BaseModule):
         super(ContextualAlignedBlock, self).__init__(init_cfg=init_cfg)
         self.avg_h = nn.AdaptiveAvgPool2d(1)
         self.avg_l = nn.AdaptiveAvgPool2d(1)  # easy to read :>
-
+        assert deep_channels == shallow_channels
         feat_ch = deep_channels + shallow_channels
         self.channel_attentive = nn.Sequential(
             nn.ChannelShuffle(2),
             ConvModule(
                 in_channels=feat_ch,
                 out_channels=feat_ch // ratio,
-                kernel_size=1,
+                kernel_size=3,
+                padding=1,
                 stride=1,
                 conv_cfg=conv_cfg,
                 norm_cfg=norm_cfg,
@@ -115,8 +122,9 @@ class ContextualAlignedBlock(BaseModule):
             ),
             ConvModule(
                 in_channels=feat_ch // ratio,
-                out_channels=feat_ch,
-                kernel_size=1,
+                out_channels=feat_ch // 2,
+                kernel_size=3,
+                padding=1,
                 stride=1,
                 conv_cfg=conv_cfg,
                 norm_cfg=norm_cfg,
@@ -315,3 +323,20 @@ class FeatureSupplementModule(BaseModule):
             return out
         else:
             return deep, out
+
+
+# model = SpatialAlignedBlock(aggregate=True, parallel=False)
+model = ContextualAlignedBlock(64, 64)
+model.eval()
+# from torchstat import stat
+#
+# stat(model, (64, 80, 80))
+
+from thop import profile
+from thop import clever_format
+
+dummy1 = torch.randn(1, 64, 80, 80)
+dummy2 = torch.randn(1, 64, 80, 80)
+flops, params = profile(model, inputs=(dummy1, dummy2), report_missing=True)
+flops, params = clever_format([flops, params], "%.3f")
+print(flops, params)
