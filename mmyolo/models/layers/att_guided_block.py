@@ -229,23 +229,6 @@ class FeatureSupplementModule(BaseModule):
                        act_cfg=dict(type='Sigmoid')
                        )
         )
-        # self.channel_attention = nn.Sequential(
-        #     nn.AdaptiveAvgPool2d(1),
-        #     ConvModule(deep_channels,
-        #                deep_channels // ratio,
-        #                kernel_size=1,
-        #                act_cfg=act_cfg,
-        #                norm_cfg=norm_cfg,
-        #                conv_cfg=conv_cfg
-        #                ),
-        #     ConvModule(deep_channels // ratio,
-        #                deep_channels,
-        #                kernel_size=1,
-        #                act_cfg=dict(type='Sigmoid'),
-        #                conv_cfg=conv_cfg,
-        #                norm_cfg=norm_cfg
-        #                )
-        # )
 
         self.max_p = nn.AdaptiveMaxPool2d(1)
         self.avg_p = nn.AdaptiveAvgPool2d(1)
@@ -323,20 +306,3 @@ class FeatureSupplementModule(BaseModule):
             return out
         else:
             return deep, out
-
-
-# model = SpatialAlignedBlock(aggregate=True, parallel=False)
-model = ContextualAlignedBlock(64, 64)
-model.eval()
-# from torchstat import stat
-#
-# stat(model, (64, 80, 80))
-
-from thop import profile
-from thop import clever_format
-
-dummy1 = torch.randn(1, 64, 80, 80)
-dummy2 = torch.randn(1, 64, 80, 80)
-flops, params = profile(model, inputs=(dummy1, dummy2), report_missing=True)
-flops, params = clever_format([flops, params], "%.3f")
-print(flops, params)
