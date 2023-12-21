@@ -1,5 +1,5 @@
 # Attention-guided-Feature-Fusion-for-SOD
-Code of paper 'Attention-guided Feature Fusion for Small Object Detection'
+Code of paper [``Attention-guided Feature Fusion for Small Object Detection``](https://ieeexplore.ieee.org/document/10355735)
 
 <img src="https://github.com/JamesYang568/Attention-guided-Feature-Fusion-for-Small-Object-Detection/assets/49474766/4966a75c-de18-49a1-9c29-157db347a0dd" alt="Overall" width="70%">
 
@@ -65,3 +65,15 @@ TABLE II.       Experimental results on VisDrone2017
 ## Contact
 
 jiaxiongyang at tongji dot edu dot cn
+
+## Citation
+If you find this project useful for your research, please use the following BibTeX entry.
+    
+    @INPROCEEDINGS{10355735,
+      author={Yang, Jiaxiong and Liu, Xianhui and Liu, Zhuang},
+      booktitle={2023 IEEE International Conference on Imaging Systems and Techniques (IST)}, 
+      title={Attention-guided Feature Fusion for Small Object Detection}, 
+      year={2023},
+      pages={1-6},
+      doi={10.1109/IST59124.2023.10355735}}
+
